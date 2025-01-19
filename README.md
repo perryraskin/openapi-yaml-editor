@@ -1,69 +1,82 @@
-# Welcome to your Lovable project
+# OpenAPI Editor
 
-## Project info
+A web-based GUI editor for creating and modifying OpenAPI (Swagger) specifications in YAML format. This tool provides both a form-based interface and direct YAML editing capabilities.
 
-**URL**: https://lovable.dev/projects/9ec63c45-7f0c-48d9-bcbc-bfbe403f6e61
+## Features
 
-## How can I edit this code?
+- **Dual View Modes**
+  - Form View: User-friendly interface for editing OpenAPI specifications
+  - YAML View: Direct YAML editing with syntax highlighting
+- **Real-time Preview**
+  - Side-by-side JSON preview
+  - Instant validation and error feedback
+- **Component Editing**
+  - API Information management
+  - Server configuration
+  - Schema definitions with property management
+  - Path operations (GET, POST, PUT, DELETE, PATCH)
+  - Request/Response configuration
 
-There are several ways of editing your application.
+## Getting Started
 
-**Use Lovable**
+### Prerequisites
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/9ec63c45-7f0c-48d9-bcbc-bfbe403f6e61) and start prompting.
+- Node.js (v16 or higher)
+- npm or yarn
 
-Changes made via Lovable will be committed automatically to this repo.
+### Installation
 
-**Use your preferred IDE**
+1. Clone the repository:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+git clone https://github.com/perryraskin/openapi-yaml-editor
+cd openapi-editor
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2. Install dependencies:
 
-Follow these steps:
+```bash
+npm install
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+3. Start the development server:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. Open your browser and navigate to `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Usage
 
-**Use GitHub Codespaces**
+### Form View
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. Click the "Form View" button in the top navigation
+2. Edit your OpenAPI specification using the intuitive form interface:
+   - Modify API information (title, description, version)
+   - Configure servers
+   - Define schemas and properties
+   - Create and edit API paths and operations
 
-## What technologies are used for this project?
+### YAML View
 
-This project is built with .
+1. Click the "YAML View" button in the top navigation
+2. Edit your OpenAPI specification directly in YAML format
+3. See real-time JSON preview on the right
 
+## Technology Stack
+
+- React with TypeScript
 - Vite
-- TypeScript
-- React
-- shadcn-ui
+- Monaco Editor for YAML editing
+- shadcn/ui components
 - Tailwind CSS
+- js-yaml for YAML parsing
 
-## How can I deploy this project?
+## Contributing
 
-Simply open [Lovable](https://lovable.dev/projects/9ec63c45-7f0c-48d9-bcbc-bfbe403f6e61) and click on Share -> Publish.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## I want to use a custom domain - is that possible?
+## License
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+This project is licensed under the MIT License - see the LICENSE file for details.
