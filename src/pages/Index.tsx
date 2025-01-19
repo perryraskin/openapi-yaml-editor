@@ -1,13 +1,15 @@
 import { useState } from "react";
 import Editor from "@/components/Editor";
 import Preview from "@/components/Preview";
-import { defaultOpenAPI } from "@/lib/defaultOpenAPI";
+import OpenAPIForm from "@/components/OpenAPIForm";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Copy } from "lucide-react";
+import { defaultOpenAPI } from "@/lib/defaultOpenAPI";
 
 const Index = () => {
   const [yaml, setYaml] = useState(defaultOpenAPI);
+  const [view, setView] = useState<"form" | "editor">("form");
   const { toast } = useToast();
 
   const handleCopy = async () => {
@@ -21,7 +23,21 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background p-4 flex flex-col gap-4">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">OpenAPI Editor</h1>
+        <div className="space-x-2">
+          <h1 className="text-2xl font-bold inline-block mr-4">OpenAPI Editor</h1>
+          <Button
+            variant={view === "form" ? "default" : "outline"}
+            onClick={() => setView("form")}
+          >
+            Form View
+          </Button>
+          <Button
+            variant={view === "editor" ? "default" : "outline"}
+            onClick={() => setView("editor")}
+          >
+            YAML View
+          </Button>
+        </div>
         <Button onClick={handleCopy} variant="outline">
           <Copy className="w-4 h-4 mr-2" />
           Copy YAML
@@ -29,7 +45,15 @@ const Index = () => {
       </div>
       
       <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 min-h-[calc(100vh-8rem)]">
-        <Editor value={yaml} onChange={(value) => setYaml(value || "")} />
+        <div className="h-full">
+          {view === "form" ? (
+            <div className="h-full border rounded-lg overflow-auto">
+              <OpenAPIForm onYamlChange={setYaml} initialYaml={yaml} />
+            </div>
+          ) : (
+            <Editor value={yaml} onChange={(value) => setYaml(value || "")} />
+          )}
+        </div>
         <Preview yaml={yaml} />
       </div>
     </div>
