@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,12 +11,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { defaultOpenAPI } from "@/lib/defaultOpenAPI";
-import { dump } from "js-yaml";
+import { dump, load } from "js-yaml";
 import { Plus, Trash2, ChevronDown, ChevronRight } from "lucide-react";
 
 interface OpenAPIFormProps {
   onYamlChange: (yaml: string) => void;
   initialYaml?: string;
+  yaml: string; // Add this prop to receive current YAML
 }
 
 interface SchemaProperty {
@@ -30,7 +31,7 @@ interface Schema {
   properties: SchemaProperty[];
 }
 
-const OpenAPIForm = ({ onYamlChange, initialYaml }: OpenAPIFormProps) => {
+const OpenAPIForm = ({ onYamlChange, initialYaml, yaml }: OpenAPIFormProps) => {
   const [info, setInfo] = useState({
     title: "Sample API",
     description: "Optional multiline or single-line description",
@@ -51,6 +52,49 @@ const OpenAPIForm = ({ onYamlChange, initialYaml }: OpenAPIFormProps) => {
     },
   ]);
   const [expandedSchemas, setExpandedSchemas] = useState<string[]>([]);
+
+  // Add effect to update form state when YAML changes
+  useEffect(() => {
+    try {
+      const parsedYaml = load(yaml) as any;
+      
+      // Update info
+      if (parsedYaml.info) {
+        setInfo({
+          title: parsedYaml.info.title || "Sample API",
+          description: parsedYaml.info.description || "Optional multiline or single-line description",
+          version: parsedYaml.info.version || "0.1.0",
+        });
+      }
+
+      // Update server
+      if (parsedYaml.servers?.[0]) {
+        setServer({
+          url: parsedYaml.servers[0].url || "http://api.example.com/v1",
+          description: parsedYaml.servers[0].description || "Production server",
+        });
+      }
+
+      // Update schemas
+      if (parsedYaml.components?.schemas) {
+        const newSchemas: Schema[] = Object.entries(parsedYaml.components.schemas).map(
+          ([name, schema]: [string, any]) => ({
+            name,
+            properties: Object.entries(schema.properties || {}).map(
+              ([propName, propDetails]: [string, any]) => ({
+                name: propName,
+                type: propDetails.type || "string",
+                ...(propDetails.format && { format: propDetails.format }),
+              })
+            ),
+          })
+        );
+        setSchemas(newSchemas);
+      }
+    } catch (error) {
+      console.error("Error parsing YAML:", error);
+    }
+  }, [yaml]);
 
   const toggleSchemaExpansion = (schemaName: string) => {
     setExpandedSchemas((prev) =>

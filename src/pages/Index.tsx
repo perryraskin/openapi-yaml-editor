@@ -48,7 +48,11 @@ const Index = () => {
         <div className="h-full">
           {view === "form" ? (
             <div className="h-full border rounded-lg overflow-auto">
-              <OpenAPIForm onYamlChange={setYaml} initialYaml={yaml} />
+              <OpenAPIForm 
+                onYamlChange={setYaml} 
+                initialYaml={yaml} 
+                yaml={yaml}  // Pass the current YAML to the form
+              />
             </div>
           ) : (
             <Editor value={yaml} onChange={(value) => setYaml(value || "")} />
