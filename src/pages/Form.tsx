@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
-import Editor from "@/components/Editor";
 import Preview from "@/components/Preview";
+import OpenAPIForm from "@/components/OpenAPIForm";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Copy } from "lucide-react";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
-const Index = () => {
+const Form = () => {
   const [yaml, setYaml] = useLocalStorage<string>("yaml");
   const { toast } = useToast();
 
@@ -26,13 +25,13 @@ const Index = () => {
             OpenAPI Editor
           </h1>
           <Button
-            variant={"default"}
+            variant={"outline"}
             onClick={() => (window.location.href = "/")}
           >
             YAML View
           </Button>
           <Button
-            variant={"outline"}
+            variant={"default"}
             onClick={() => (window.location.href = "/form")}
           >
             Form View
@@ -46,7 +45,13 @@ const Index = () => {
 
       <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 min-h-[calc(100vh-8rem)]">
         <div className="h-full">
-          <Editor value={yaml} onChange={(value) => setYaml(value || "")} />
+          <div className="h-full border rounded-lg overflow-auto">
+            <OpenAPIForm
+              onYamlChange={setYaml}
+              initialYaml={yaml}
+              yaml={yaml} // Pass the current YAML to the form
+            />
+          </div>
         </div>
         <Preview yaml={yaml} />
       </div>
@@ -54,4 +59,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Form;

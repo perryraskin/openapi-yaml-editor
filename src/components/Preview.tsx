@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { load } from "js-yaml";
 import { cn } from "@/lib/utils";
@@ -22,7 +23,12 @@ const Preview = ({ yaml, className }: PreviewProps) => {
   }, [yaml]);
 
   return (
-    <div className={cn("h-full w-full rounded-lg border border-border bg-card p-4 overflow-auto", className)}>
+    <div
+      className={cn(
+        "h-full w-full rounded-lg border border-border bg-card p-4 overflow-auto",
+        className
+      )}
+    >
       {error ? (
         <div className="text-destructive">{error}</div>
       ) : (

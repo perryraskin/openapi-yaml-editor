@@ -112,8 +112,10 @@ const SchemaEditor = ({
                 </button>
                 <Input
                   value={schema.name}
-                  onChange={(e) => updateSchemaName(schemaIndex, e.target.value)}
-                  className="w-48"
+                  onChange={(e) =>
+                    updateSchemaName(schemaIndex, e.target.value)
+                  }
+                  className="w-96"
                 />
               </div>
               <Button
